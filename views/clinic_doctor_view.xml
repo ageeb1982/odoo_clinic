@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- """Create Form View""" -->
+
+        <record id="clinic_doctor_form_view" model="ir.ui.view">
+            <field name="name">clinic.doctor.form</field>
+            <field name="model">clinic.doctor</field>
+            <field name="arch" type="xml">
+                <form string="doctor">
+                    <sheet>
+                        <div style="width:100%;">
+                            <div style="width:20%;float:left;">
+                                <field name="image" widget="image"/>
+                            </div>
+                            <div style="width:78%;float:right;">
+                                <group colspan="2" col="2">
+                                    <field name="name" nolabel="1" style="font-size:32px;"/>
+                                </group>
+                                <table style="width:100%;">
+                                    <tr style="width:100%;">
+
+                                        <td style="width:25%;font-size:13px;">
+                                            <field name="first_name" placeholder="أدخل الأسم الأول "/>
+                                        </td>
+                                        <td style="width:25%;font-size:13px;">
+                                            <field name="second_name" placeholder="أدخل الأسم الثاني"/>
+                                        </td>
+                                        <td style="width:25%;font-size:13px;">
+                                            <field name="third_name" placeholder="أدخل الأسم الثالث"/>
+                                        </td>
+                                        <td style="width:25%;font-size:13px;">
+                                            <field name="forth_name" placeholder="أدخل الأسم     الرابع"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <br></br>
+                        <br></br>
+
+                        <group colspan="4" col="4">
+                            <field name="gender"/>
+                            <field name="birth_day"/>
+                            <field name="country_id" />
+                            <field name="phone"/>
+
+                        </group>
+                        <table style="width:50%;">
+                            <tr>
+                                <td style="width:40%;font-size:13px;padding:2px;">
+                                </td>
+                                <td style="width:20%;padding:2px;">
+                                    <center>
+   			 سنوات
+                                    </center>
+                                </td>
+                                <td style="width:20%;padding:2px;">
+                                    <center>
+   			 شهور
+                                    </center>
+                                </td>
+                                <td style="width:20%;padding:2px;">
+                                    <center>
+   			 أيام
+                                    </center>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:40%;font-size:13px;padding:2px;">
+                                    <b>
+   			 العمر
+                                    </b>
+                                </td>
+                                <td style="width:20%;padding:2px;">
+                                    <center>
+                                        <field name="age_year" />
+                                    </center>
+                                </td>
+                                <td style="width:20%;padding:2px;">
+                                    <center>
+                                        <field name="age_month" />
+                                    </center>
+                                </td>
+                                <td style="width:20%;padding:2px;">
+                                    <center>
+                                        <field name="age_day" />
+                                    </center>
+                                </td>
+                            </tr>
+                        </table>
+                        <notebook>
+                            <page string="قائمة المرضى">
+                                <group colspan="4" col="4">
+                                    <field name="patient_id" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="قائمة المؤهلات">
+                                <group colspan="4" col="4">
+                                   <field name="specialty"/>
+                                    <field name="academic_degree"/>
+                                    <field name="university"/>
+                                    <field name="graduate_year"/>
+                                </group>
+                                <group colspan="2" col="2">
+                                    <field name="qualifications" nolabel="1"/>
+                                </group>
+
+                            </page>
+                        </notebook>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        <!-- """Create Tree View""" -->
+
+        <record id="clinic_doctor_tree_view" model="ir.ui.view">
+            <field name="name">clinic.doctor.tree</field>
+            <field name="model">clinic.doctor</field>
+            <field name="arch" type="xml">
+                <tree string="الأطباء">
+                    <field name="name"/>
+                    <field name="gender"/>
+                    <field name="age_year"/>
+                    <field name="phone"/>
+
+
+
+                </tree>
+            </field>
+        </record>
+
+        <!-- """Create Action View""" -->
+
+        <record id="clinic_doctor_action_view" model="ir.actions.act_window">
+            <field name="name">ملف الاطباء</field>
+            <field name="res_model">clinic.doctor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="clinic_doctor_tree_view"/>
+        </record>
+
+
+
+
+        <!-- """Create the Configration menu """ -->
+
+        <menuitem id="clinic_doctor_main_menu" name="الأطباء" sequence="3" parent="clinic_root_menu" />
+
+        <!-- """Create the Company's Projects menu""" -->
+
+        <menuitem name="قائمة الاطباء" parent="clinic_doctor_main_menu" action="clinic_doctor_action_view" id="doctors_action_menu" sequence="5" />
+
+    </data>
+</odoo> 

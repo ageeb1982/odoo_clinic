@@ -1,0 +1,61 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="specialty_list">
+      <field name="name">قائمة التخصصات</field>
+      <field name="model">doctor.specialty</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+
+        </tree>
+      </field>
+    </record>
+
+    <record id="doctor_specialty_form_view" model="ir.ui.view">
+      <field name="name">doctor.specialty.form</field>
+      <field name="model">doctor.specialty</field>
+      <field name="arch" type="xml">
+        <form string="Specialty">
+          <sheet>
+
+
+            <group colspan="2" col="2">
+              <field name="name" nolabel="1" style="font-size:32px;"/>
+            </group>
+            <notebook>
+              <page string="قائمة الاطباء">
+                <group colspan="4" col="4">
+                  <field name="doctor_id" nolabel="1"/>
+                </group>
+              </page>
+            </notebook>
+
+          </sheet>
+
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="specialty_action_window">
+      <field name="name">قائمة التخصصات</field>
+      <field name="res_model">doctor.specialty</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+    <!-- menu categories -->
+
+    <menuitem name="التخصصات" id="specialty_menu_1" parent="clinic_root_menu"/>
+
+    <!-- actions -->
+
+    <menuitem name="كل التخصصات" id="specialty_menu_1_list" parent="specialty_menu_1" action="specialty_action_window"/>
+
+  </data>
+</odoo>
