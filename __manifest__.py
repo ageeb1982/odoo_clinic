@@ -35,6 +35,7 @@
         'views/clinic_patient_view.xml',
         'views/clinic_doctor_view.xml',
         'views/DoctorSpecialty_views.xml',
+        'views/clinic_booking_view.xml',
 
         # 'views/templates.xml',
     ],

@@ -33,6 +33,38 @@ class ClinicDoctor(models.Model):
     qualifications = fields.Html(string="المؤهلات")
     graduate_year = fields.Date(string="سنة التخرج")
     university = fields.Char(string="الجامعة")
+    wait_d_bookings = fields.Integer(string="عدد حالات الإنتظار" ,compute="get_wating_qty",readonly=True)
+
+    @api.one
+    def get_wating_qty(self):
+        """تقوم بحساب عدد المرضى المنتظرين"""
+        booking_ids = self.env['clinic.booking'].search(['state', '=', 'wait_d_meeting'])
+        countx = 0
+        for rec in booking_ids:
+            if rec.doctor_id == self:
+                countx = countx + 1
+             
+        self.wait_d_bookings = countx
+    
+    @api.multi
+    def view_waiting_booking(self):
+        """لعرض المرضى المنتظرين"""
+        booking_ids = self.env['clinic.booking'].search(['state', '=', 'wait_d_meeting'])
+        countx = 0
+        booking = []
+        for rec in booking_ids:
+            if rec.doctor_id == self:
+                countx = countx + 1
+                booking.append(rec)
+        return {
+       'name': _('Clinic_Booking'),
+        	'view_type': 'form',
+        	'view_mode': 'tree,form',
+        	'res_model': 'clinic.booking',
+        	'view_id': False,
+        	'type': 'ir.actions.act_window',
+        	'domain': ['id','in',booking],
+        }
 
     @api.one
     def get_full_name(self):

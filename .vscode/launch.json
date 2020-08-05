@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/ageeb/MyOdoo/odoo11/odoo-bin",
+            "console": "integratedTerminal",
+            "args": [
+                "--xmlrpc-port=8090"
+                //  "-d db",
+                //  "-u boatManger",
+            ],
+        },
+    ]
+}
+//"--addons-paths /home/ageeb/MyOdoo/addons,/home/ageeb/.local/share/Odoo/addons/11.0,/ageeb/ageeb-server/odoo/addons,/ageeb/ageeb-server/addons,/home/ageeb/MyOdoo/odoo11/odoo/addons,/usr/local/lib/python3.6/dist-packages/odoo-11.0-py3.6.egg/odoo/addons"

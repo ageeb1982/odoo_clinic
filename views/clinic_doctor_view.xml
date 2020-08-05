@@ -10,6 +10,16 @@
             <field name="arch" type="xml">
                 <form string="doctor">
                     <sheet>
+
+                        <div style="float:right;">
+                            <button class="oe_stat_booking" name="view_waiting_booking" icon="fa-building-o" type="object">
+                                <field name="wait_d_bookings" widget="statinfo" nolabel="1" style="color:red !important;font-size:13px;" />
+                                <strong>&#160;قائمة الإنتظار</strong>
+
+                            </button>
+                        </div>
+
+
                         <div style="width:100%;">
                             <div style="width:20%;float:left;">
                                 <field name="image" widget="image"/>
@@ -99,7 +109,7 @@
                             </page>
                             <page string="قائمة المؤهلات">
                                 <group colspan="4" col="4">
-                                   <field name="specialty"/>
+                                    <field name="specialty"/>
                                     <field name="academic_degree"/>
                                     <field name="university"/>
                                     <field name="graduate_year"/>
@@ -114,6 +124,53 @@
                     </sheet>
 
                 </form>
+            </field>
+        </record>
+
+
+
+        <!-- """Create kanban View""" -->
+
+        <record id="clinic_doctor_kanban_view" model="ir.ui.view">
+            <field name="name">clinic.doctor.kanban</field>
+            <field name="model">clinic.doctor</field>
+            <field name="arch" type="xml">
+                <kanban >
+                    <field name='id'/>
+                    <field name="image"/>
+                    <field name="specialty"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click" style=" border: 1px solid #d9d7d7; border-radius: 5px !important;">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('clinic.doctor','image',record.id.raw_value)" alt="Image"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <li style="font-size:16px;color:blue !important;">
+                                            <b>Name :</b>
+                                            <field name="name"/>
+                                        </li>
+                                        <li>
+                                            <b>Specialty :</b>
+                                            <field name="specialty"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left" style="margin-left:8px;">
+                                        <b> A.D :</b>
+                                        <field name="academic_degree"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right" style="margin-right:40px;">
+                                        <b> Age :</b>
+                                        <field name="age_year"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
             </field>
         </record>
 
@@ -141,7 +198,7 @@
             <field name="name">ملف الاطباء</field>
             <field name="res_model">clinic.doctor</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,kanban</field>
             <field name="view_id" ref="clinic_doctor_tree_view"/>
         </record>
 
