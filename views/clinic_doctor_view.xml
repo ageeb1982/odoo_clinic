@@ -205,7 +205,7 @@
 
 
 
-        <!-- """Create the Configration menu """ -->
+        <!-- """Create the Configuration menu """ -->
 
         <menuitem id="clinic_doctor_main_menu" name="الأطباء" sequence="3" parent="clinic_root_menu" />
 

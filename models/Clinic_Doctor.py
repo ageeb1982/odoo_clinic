@@ -33,37 +33,40 @@ class ClinicDoctor(models.Model):
     qualifications = fields.Html(string="المؤهلات")
     graduate_year = fields.Date(string="سنة التخرج")
     university = fields.Char(string="الجامعة")
-    wait_d_bookings = fields.Integer(string="عدد حالات الإنتظار" ,compute="get_wating_qty",readonly=True)
+    wait_d_bookings = fields.Integer(string="عدد حالات الإنتظار", compute="get_waiting_Qty", readonly=True)
 
     @api.one
-    def get_wating_qty(self):
+    def get_waiting_Qty(self):
         """تقوم بحساب عدد المرضى المنتظرين"""
-        booking_ids = self.env['clinic.booking'].search(['state', '=', 'wait_d_meeting'])
-        countx = 0
+
+
+        count_x = 0
+
+        booking_ids = self.env['clinic.booking'].search([('state', '=', 'wait_d_meeting')])
         for rec in booking_ids:
             if rec.doctor_id == self:
-                countx = countx + 1
-             
-        self.wait_d_bookings = countx
-    
+                count_x = count_x + 1
+
+        self.wait_d_bookings = count_x
+
     @api.multi
     def view_waiting_booking(self):
         """لعرض المرضى المنتظرين"""
-        booking_ids = self.env['clinic.booking'].search(['state', '=', 'wait_d_meeting'])
-        countx = 0
+        count_x = 0
+        booking_ids = self.env['clinic.booking'].search([('state', '=', 'wait_d_meeting')])
         booking = []
         for rec in booking_ids:
             if rec.doctor_id == self:
-                countx = countx + 1
-                booking.append(rec)
+                count_x = count_x + 1
+                booking.append(rec.id)
         return {
-       'name': _('Clinic_Booking'),
-        	'view_type': 'form',
-        	'view_mode': 'tree,form',
-        	'res_model': 'clinic.booking',
-        	'view_id': False,
-        	'type': 'ir.actions.act_window',
-        	'domain': ['id','in',booking],
+            'name': _('Clinic_Booking'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'clinic.booking',
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'domain': [('id', 'in', booking)],
         }
 
     @api.one
@@ -71,8 +74,8 @@ class ClinicDoctor(models.Model):
         """
                         دالة لجلب الإسم كاملاً
                         """
-        self.name = self.first_name+' '+self.second_name + \
-            ' '+self.third_name+' '+self.forth_name
+        self.name = self.first_name + ' ' + self.second_name + \
+                    ' ' + self.third_name + ' ' + self.forth_name
 
     @api.one
     def calculate_age(self):
@@ -84,18 +87,18 @@ class ClinicDoctor(models.Model):
             birth_day = str(self.birth_day)
             current_date = str(fields.Date.today())
             birth_day_year_as_int = int(
-                birth_day[0]+birth_day[1]+birth_day[2]+birth_day[3])
-            birth_day_month_as_int = int(birth_day[5]+birth_day[6])
-            birth_day_day_as_int = int(birth_day[8]+birth_day[9])
+                birth_day[0] + birth_day[1] + birth_day[2] + birth_day[3])
+            birth_day_month_as_int = int(birth_day[5] + birth_day[6])
+            birth_day_day_as_int = int(birth_day[8] + birth_day[9])
 
             current_date_year_as_int = int(
-                current_date[0]+current_date[1]+current_date[2]+current_date[3])
-            current_date_month_as_int = int(current_date[5]+current_date[6])
-            current_date_day_as_int = int(current_date[8]+current_date[9])
+                current_date[0] + current_date[1] + current_date[2] + current_date[3])
+            current_date_month_as_int = int(current_date[5] + current_date[6])
+            current_date_day_as_int = int(current_date[8] + current_date[9])
 
-            period_years = current_date_year_as_int-birth_day_year_as_int
-            period_months = current_date_month_as_int-birth_day_month_as_int
-            period_days = current_date_day_as_int-birth_day_day_as_int
+            period_years = current_date_year_as_int - birth_day_year_as_int
+            period_months = current_date_month_as_int - birth_day_month_as_int
+            period_days = current_date_day_as_int - birth_day_day_as_int
 
             months_list_1 = ['04', '06', '09', '11']
             months_list_2 = ['01', '03', '05', '07', '08', '10', '12']
@@ -103,19 +106,19 @@ class ClinicDoctor(models.Model):
             if period_days < 0:
                 if str(current_date_month_as_int) == '02':
                     if current_date_year_as_int % 4 == 0:
-                        period_days = 29+period_days
+                        period_days = 29 + period_days
                     if current_date_year_as_int % 4 != 0:
-                        period_days = 28+period_days
+                        period_days = 28 + period_days
                 for index in range(0, 4):
                     if current_date_month_as_int == int(months_list_1[index]):
-                        period_days = 30+period_days
+                        period_days = 30 + period_days
                 for index in range(0, 7):
                     if current_date_month_as_int == int(months_list_2[index]):
-                        period_days = 31+period_days
-                period_months = period_months-1
+                        period_days = 31 + period_days
+                period_months = period_months - 1
             if period_months < 0:
-                period_months = 12+period_months
-                period_years = period_years-1
+                period_months = 12 + period_months
+                period_years = period_years - 1
 
             self.age_year = period_years
             self.age_month = period_months

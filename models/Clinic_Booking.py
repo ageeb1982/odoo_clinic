@@ -10,8 +10,12 @@ class ClinicBooking(models.Model):
     _name = 'clinic.booking'
     _description = "object contain all doctor data"
 
-    state = fields.Selection([('draft', 'البداية-المسودة'), ('wait_d_meeting', 'انتظار الدخول على الطبيب'),
-                              ('stay_on_ward', 'تنويم في العنبر'), ('medical_bill', 'صرف روشته')], string='االوضع الحالي', default='draft')
+    state = fields.Selection(
+        [('draft', 'البداية-المسودة')
+            , ('wait_d_meeting', 'انتظار الدخول على الطبيب'),
+         ('stay_on_ward', 'تنويم في العنبر')
+            , ('medical_bill', 'صرف روشته')]
+        , string='الوضع الحالي', default='draft')
     patient_id = fields.Many2one(
         'clinic.patient', string='اسم المريض', required=True)
     doctor_id = fields.Many2one(
@@ -24,7 +28,7 @@ class ClinicBooking(models.Model):
     @api.one
     def action_to_wait_d_meeting(self):
         """عن طريق موظف الإستقبال يحول حالة المريض من البداية إلى انتظار الطبيب"""
-        if self.paid_fees == False:
+        if (self.paid_fees == False):
             raise ValidationError(_("هذا المريض لم يدفع قيمة الكشف !"))
         self.state = 'wait_d_meeting'
 
@@ -43,4 +47,4 @@ class ClinicBooking(models.Model):
         self.patient_id.write({'last_meeting': self.meeting_date})
         # يقوم بتسجيل انه تم زيارة للطبيب بتاريخ معين
         self.state = 'medical_bill'
-   
+
