@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+       <!-- """Create Form View""" -->
+       <record id="clinic_booking_wiz_form" model="ir.ui.view">
+           <field name="name">clinic.booking.report.wiz.form</field>
+           <field name="model">clinic.booking.report.wiz</field>
+           <field name="arch" type="xml">
+               <form>
+
+                   <sheet>
+                       <group colspan="4" col="4">
+                           <field name="state" />
+                           <field name="patient_id" />
+                           <field name="doctor_id" />
+                           <field name="date" />
+                           <field name="meeting_date" />
+                       </group>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                       <center>
+                           <n>
+                               إذا اردت طباعة كل البيانات اترك البيانات فارغة
+                           </n>
+                       </center>
+                       <footer>
+                           <button
+                                   name="print_booking_report"
+                                   string="طباعة التقرير"
+                                   type="object"
+                                   default_focus="1"
+                                   class="oe_highlight"/>
+                           <button
+                                   string="إلغاء الأمر"
+                                   special="cancel"/>
+
+                       </footer>
+                   </sheet>
+               </form>
+           </field>
+       </record>
+
+       <!-- """Create Wizard Action """ -->
+
+        <record model="ir.actions.act_window" id="clinic_booking_wiz_actWin">
+            <field name="name">معالج تقارير المواعي</field>
+            <field name="res_model">clinic.booking.report.wiz</field>
+            <field name="src_model">clinic.booking.report.wiz</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="clinic_booking_wiz_form"/>
+</record>
+        <!--    <field name="view_id" ref="clinic_booking_tree_view"/>-->
+
+      <menuitem name="تقارير الحجوزات"
+                  parent="clinic_booking_root_menu"
+                  action="clinic_booking_wiz_actWin"
+                  id="clinic_booking_repo_action_menu"
+                  sequence="3" />
+   </data>
+</odoo>

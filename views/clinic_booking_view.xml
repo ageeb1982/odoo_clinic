@@ -60,45 +60,23 @@
 
         <!-- """Create the Booking Root menu """ -->
 
-        <menuitem id="clinic_booking_root_menu" name="حجز عيادة" sequence="1" />
+        <menuitem id="clinic_booking_root_menu"
+                  name="حجز عيادة" sequence="1" />
 
         <!-- """Create the Booking Mani menu""" -->
 
-        <menuitem name="قائمة حجز العيادات" parent="clinic_booking_root_menu" action="clinic_booking_action_view" id="clinic_booking_action_menu" sequence="2" />
+        <menuitem name="قائمة حجز العيادات"
+                  parent="clinic_booking_root_menu"
+                  action="clinic_booking_action_view"
+                  id="clinic_booking_action_menu"
+                  sequence="2" />
+
+
+
+
+
+
+
 
     </data>
-
-     <template id="clinic_booking_report_temp">
-        	<t t-call="web.html_container">
-            	<t t-foreach="docs" t-as="doc">
-                	<t t-call="web.external_layout">
-                    	<div class="page">
-                    	</div>
-                	</t>
-            	</t>
-        	</t>
-    	</template>
-    <report
-        	id="clinic_booking_report_action"
-        	string="Booking Report"
-        	model="clinic.booking"
-        	report_type="qweb-pdf"
-        	name="clinic.clinic_booking_report_temp"
-        	menu="True"
-    	/>
-     <record id="paperformat_euro_no_margin" model="report.paperformat">
-        	<field name="name">European A4</field>
-        	<field name="default" eval="True" />
-        	<field name="format">A4</field>
-        	<field name="page_height">0</field>
-        	<field name="page_width">0</field>
-        	<field name="orientation">Portrait</field>
-        	<field name="margin_top">40</field>
-        	<field name="margin_bottom">28</field>
-        	<field name="margin_left">7</field>
-        	<field name="margin_right">7</field>
-        	<field name="header_line" eval="False" />
-        	<field name="header_spacing">0</field>
-        	<field name="dpi">90</field>
-    	</record>
-</odoo> 
+</odoo>
