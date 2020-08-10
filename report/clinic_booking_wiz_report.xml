@@ -1,100 +1,194 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    	<!-- ...Define Template... -->
+    <!-- ...Define Template... -->
 
-    	<template id="booking_custom_report_temp">
-        	<t t-call="web.html_container">
-            	<t t-call="web.external_layout">
+    <template id="booking_custom_report_temp">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
 
-                	<div class="page">
-                    	<table style="width:100%;">
-                        	<tr style="font-size:18px; border: 2px solid black;text-align: center;">
-                            	<td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
-                                	<b>
-                                    	الطبيب
-                                	</b>
-                            	</td>
-                            	<td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
-                                	<b>
-                                    	المريض
-                                	</b>
-                            	</td>
-                            	<td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
-                                	<b>
-                                    	التاريخ
-                                	</b>
-                            	</td>
-                            	<td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
-                                	<b>
-                                    	تاريخ الموعد
-                                	</b>
-                            	</td>
-                            	<td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
-                                	<b>
-                                    	الحالة
-                                	</b>
-                            	</td>
-                        	</tr>
-                        	<t t-foreach="data" t-as="object_line">
-                            	<tr style="font-size:18px; border: 2px solid black;text-align: center;">
-                                	<td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
-                                    	<n>
-                                        	<span t-esc="object_line.doctor_id.name" />
-                                    	</n>
-                                	</td>
-                                	<td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
-                                    	<n>
-                                        	<span t-esc="object_line.patient_id.name" />
-                                    	</n>
-                                	</td>
-                                	<td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
-                                    	<n>
-                                        	<span t-esc="object_line.date" />
-                                    	</n>
-                                	</td>
-                                	<td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
-                                    	<n>
-                                        	<span t-esc="object_line.meeting_date" />
-                                    	</n>
-                                	</td>
-                                	<td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
-                                    	<n>
-                                        	<span t-esc="object_line.state" />
-                                    	</n>
-                                	</td>
-                            	</tr>
-                        	</t>
-                    	</table>
-                	</div>
-            	</t>
-        	</t>
-    	</template>
+                <div class="page" style="background-color:white">
 
-    	<!-- """create report """ -->
+                    <header>
+                        <div style="float:left;border-bottom: 2px solid black;border-color:#1f7b91 ! important;width:70%;">
+                            <b style="font-size:32px;color:#1f7b91 ! important;">
+                                اسم الشركة
+                            </b>
+                            <br></br>
+                            <b style="font-size:22px;color:#1f7b91 !important;">
+                                اسم النظام
+                            </b>
+                        </div>
+                        <div style="float:right;">
+                            <img src="/logo.png?company=${company.id}"/>
+                            <!--<img src="/clinic/static/img/shilal.png" style="width:160px;height:100px;"/>-->
+                        </div>
+                    </header>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <div>
+                        <center>
+                            <u>
+                                <b style="font-size:20px;">
+                                    عنوان التقرير
+                                </b>
+                            </u>
+                        </center>
+                    </div>
+                    <br></br>
+                    <br></br>
 
-    	<report
-        	id="booking_custom_report_action"
-        	string="تقرير عن المواعيد بواسطة البحث"
-        	model="clinic.booking"
-        	report_type="qweb-pdf"
-        	name="clinic.booking_custom_report_temp"
-        	menu="False"
-    	/>
-     	<record id="paperformat_euro_no_margin" model="report.paperformat">
-        	<field name="name">European A4</field>
-        	<field name="default" eval="True" />
-        	<field name="format">A4</field>
-        	<field name="page_height">0</field>
-        	<field name="page_width">0</field>
-        	<field name="orientation">Portrait</field>
-        	<field name="margin_top">40</field>
-        	<field name="margin_bottom">28</field>
-        	<field name="margin_left">7</field>
-        	<field name="margin_right">7</field>
-        	<field name="header_line" eval="False" />
-        	<field name="header_spacing">0</field>
-        	<field name="dpi">90</field>
-    	</record>
+                    <div style="width:50%;float:left;font-size:14;">
+                        <t t-if="doctor_id != 'no'">
+                            <b>
+                                الطبيب :
+                            </b>
+                            <span t-esc="doctor_id"/>
+                            <br></br>
+                        </t>
+                        <t t-if="patient_id != 'no'">
+                            <b>
+                                المريض :
+                            </b>
+                            <span t-esc="patient_id"/>
+                            <br></br>
+                        </t>
+                        <t t-if="meeting_date != 'no'">
+                            <b>
+                                تاريخ الموعد :
+                            </b>
+                            <span t-esc="meeting_date"/>
+                            <br></br>
+                        </t>
+                        <br></br>
+                    </div>
+                    <div style="width:50%;float:right;font-size:14;">
+                        <t t-if="date != 'no'">
+                            <b>
+                                التاريخ :
+                            </b>
+                            <span t-esc="date"/>
+                            <br></br>
+                        </t>
+                        <t t-if="state != 'no'">
+                            <b>
+                                الحالة :
+                            </b>
+                            <span t-esc="state"/>
+                            <br></br>
+                        </t>
+                    </div>
+                    <table style="width:100%;">
+                        <tr style="font-size:18px; border: 2px solid black;text-align: center;">
+                            <td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
+                                <b>
+                                    الطبيب
+                                </b>
+                            </td>
+                            <td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
+                                <b>
+                                    المريض
+                                </b>
+                            </td>
+                            <td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
+                                <b>
+                                    التاريخ
+                                </b>
+                            </td>
+                            <td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
+                                <b>
+                                    تاريخ الموعد
+                                </b>
+                            </td>
+                            <td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
+                                <b>
+                                    الحالة
+                                </b>
+                            </td>
+                        </tr>
+                        <t t-foreach="data" t-as="object_line">
+                            <tr style="font-size:18px; border: 2px solid black;text-align: center;">
+                                <td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
+                                    <n>
+                                        <span t-esc="object_line.doctor_id.name"/>
+                                    </n>
+                                </td>
+                                <td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
+                                    <n>
+                                        <span t-esc="object_line.patient_id.name"/>
+                                    </n>
+                                </td>
+                                <td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
+                                    <n>
+                                        <span t-esc="object_line.date"/>
+                                    </n>
+                                </td>
+                                <td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
+                                    <n>
+                                        <span t-esc="object_line.meeting_date"/>
+                                    </n>
+                                </td>
+                                <td style="font-size:14px; border: 2px solid black;padding-top:5px;padding-bottom:5px;">
+                                    <n>
+                                        <span t-esc="object_line.state"/>
+                                    </n>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+
+                    <br></br>
+                    <br></br>
+                    <div>
+                        <b style="font-size:14px;width:50%;float:left;">
+                            بواسطة :
+                            <span t-esc="request.env.user.partner_id.name"/>
+                            <br></br>
+                            الإمضاء : _____________________________
+                        </b>
+                    </div>
+                    <div>
+                        <b style="font-size:14px;width:50%;float:right;">
+                            تم الطباعة في  :
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%A %d-%B-%Y')"/>
+                        </b>
+                    </div>
+
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- """create report """ -->
+
+    <report
+            id="booking_custom_report_action"
+            string="تقرير عن المواعيد بواسطة البحث"
+            model="clinic.booking"
+            report_type="qweb-pdf"
+            name="clinic.booking_custom_report_temp"
+            menu="False"
+    />
+    <record id="paperformat_euro_no_margin" model="report.paperformat">
+        <field name="name">European A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">28</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
 
 </odoo>

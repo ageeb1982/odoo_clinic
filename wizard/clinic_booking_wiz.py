@@ -16,6 +16,7 @@ class ClinicBookingWiz(models.TransientModel):
     date = fields.Date(string="التاريخ")
     meeting_date = fields.Date(string="تاريخ الموعد")
 
+
     @api.multi
     def print_booking_report(self):
         """
@@ -24,24 +25,35 @@ class ClinicBookingWiz(models.TransientModel):
         booking_ids = self.env['clinic.booking'].search([])
         data = {}
         booking_list = []
+        state = 'no'
+        patient_id = 'no'
+        doctor_id = 'no'
+        date = 'no'
+        meeting_date = 'no'
         if self.state:
             for rec in booking_ids:
                 if rec.state == self.state:
                     booking_list.append(rec.id)
             booking_ids = booking_ids.search([('id', 'in', booking_list)])
             booking_list = []
+            state = str(self.state)
+
         if self.patient_id:
             for rec in booking_ids:
                 if rec.patient_id == self.patient_id:
                     booking_list.append(rec.id)
             booking_ids = booking_ids.search([('id', 'in', booking_list)])
             booking_list = []
+            patient_id = str(self.patient_id.name)
+
         if self.doctor_id:
             for rec2 in booking_ids:
                 if rec2.doctor_id == self.doctor_id:
                     booking_list.append(rec2.id)
             booking_ids = booking_ids.search([('id', 'in', booking_list)])
             booking_list = []
+            doctor_id = str(self.doctor_id.name)
+
         if self.date:
             for rec3 in booking_ids:
                 self_date = str(self.date)
@@ -50,6 +62,7 @@ class ClinicBookingWiz(models.TransientModel):
                     booking_list.append(rec3.id)
             booking_ids = booking_ids.search([('id', 'in', booking_list)])
             booking_list = []
+            date = str(self.date)
 
         if self.meeting_date:
             for rec4 in booking_ids:
@@ -59,6 +72,7 @@ class ClinicBookingWiz(models.TransientModel):
                     booking_list.append(rec4.id)
             booking_ids = booking_ids.search([('id', 'in', booking_list)])
             booking_list = []
+            meeting_date = str(self.meeting_date)
 
         for rec5 in booking_ids:
             booking_list.append(rec5.id)
